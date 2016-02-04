@@ -67,6 +67,7 @@ public class BrowserView {
     private ResourceBundle myResources;
     // the data
     private BrowserModel myModel;
+    private Button myFavoriteButton;
 
     /**
      * Create a view of the given model of a web browser.
@@ -84,19 +85,18 @@ public class BrowserView {
         enableButtons();
         // create scene to hold UI
         myScene = new Scene(root, DEFAULT_SIZE.width, DEFAULT_SIZE.height);
-        //myScene.getStylesheets().add(DEFAULT_RESOURCE_PACKAGE + STYLESHEET);
+        myScene.getStylesheets().add(DEFAULT_RESOURCE_PACKAGE + STYLESHEET);
     }
 
     /**
      * Display given URL.
      */
     public void showPage (String url) {
-        URL valid = myModel.go(url);
-        if (valid != null) {
+        try{
+        	URL valid = myModel.go(url);
             update(valid);
-        }
-        else {
-            showError("Could not load " + url);
+        } catch (Exception e) {
+        	throw new BrowserException(myResources.getString("BrowserError"));
         }
     }
 
@@ -213,6 +213,8 @@ public class BrowserView {
         result.getChildren().add(myNextButton);
         myHomeButton = makeButton("HomeCommand", event -> home());
         result.getChildren().add(myHomeButton);
+        myFavoriteButton = makeButton("AddFavoriteCommand", event -> addFavorite());
+        result.getChildren().add(myFavoriteButton);
         // if user presses button or enter in text field, load/show the URL
         EventHandler<ActionEvent> showHandler = new ShowPage();
         result.getChildren().add(makeButton("GoCommand", showHandler));
@@ -225,6 +227,7 @@ public class BrowserView {
     private Node makePreferencesPanel () {
         HBox result = new HBox();
         myFavorites = new ComboBox<String>();
+        result.getChildren().add(myFavorites);
         // ADD REST OF CODE HERE
         result.getChildren().add(makeButton("SetHomeCommand", event -> {
             myModel.setHome();

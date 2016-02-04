@@ -1,13 +1,13 @@
 .root {
     -fx-font-size: 14pt;
-    -fx-font-family: "Courier New";
-    -fx-base: rgb(132, 145, 47);
-    -fx-background: rgb(225, 228, 203);
+    -fx-font-family: "Arial";
+    -fx-base: rgb(102, 255, 51);
+    -fx-background: rgb(255, 51, 153);
 }
 
 .button {
-    -fx-text-fill: #006464;
-    -fx-background-color: #DFB951;
+    -fx-text-fill: #000000;
+    -fx-background-color: #0066FF;
     -fx-border-radius: 20;
     -fx-background-radius: 20;
     -fx-padding: 8;
